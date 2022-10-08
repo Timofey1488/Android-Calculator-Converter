@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/currencyFragment"
+        android:enabled="true"
+        android:title="@string/currency"/>
+    <item
+        android:id="@+id/lengthFragment"
+        android:enabled="true"
+        android:title="@string/length"/>
+    <item
+        android:id="@+id/speedFragment"
+        android:enabled="true"
+        android:title="@string/speed"/>
+
+</menu>

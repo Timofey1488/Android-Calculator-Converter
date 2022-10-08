@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:layout_height="300dp"
+    android:orientation="vertical"
+    tools:context=".UI.CurrencyFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.7"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="60dp"
+            android:layout_weight="1.7"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/PrevText"
+                style="@style/TextViewStyle"
+                android:layout_weight="3"
+                android:maxLength="12"
+                android:hint="Convert From"
+                android:layout_marginRight="10dp"
+                android:imeOptions="actionNone"
+                android:inputType="text" />
+
+            <Button
+                android:onClick="copyText"
+                android:visibility="invisible"
+                android:id="@+id/CopyButtonBefore"
+                style="@style/ActionButton"
+                android:layout_weight="0.6"
+                android:text="@string/fa_clone"
+                android:textSize="20dp" />
+            <Spinner
+                android:id="@+id/SpinnerBefore"
+                style="@style/TextViewStyle"
+                android:layout_weight="0.6"
+                android:entries="@array/currencyList" />
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.7"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <EditText
+                android:enabled="false"
+                android:id="@+id/AfterText"
+                style="@style/TextViewStyle"
+                android:hint="Convert To"
+                android:maxLength="12"
+                android:imeOptions="actionNone"
+                android:layout_weight="3" />
+            <Button
+                android:onClick="copyText"
+                android:visibility="invisible"
+                android:id="@+id/CopyButtonAfter"
+                style="@style/ActionButton"
+                android:layout_weight="0.6"
+                android:text="@string/fa_clone"
+                android:textSize="20dp" />
+            <Spinner
+                android:id="@+id/SpinnerAfter"
+                style="@style/TextViewStyle"
+                android:layout_weight="0.6"
+                android:entries="@array/currencyList"/>
+
+
+
+
+        </LinearLayout>
+
+
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_gravity="center"
+        android:layout_height="250dp"
+        android:layout_weight="1.7"
+        android:orientation="vertical"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <Button
+                android:onClick="pasteText"
+                android:id="@+id/PasteButtonBefore"
+                style="@style/ActionButton"
+                android:visibility="invisible"
+                android:layout_weight="0.5"
+                android:text="@string/fa_download"
+                android:textSize="20dp" />
+            <Button
+                style="@style/ActionButton"
+                android:onClick="Swap"
+                android:layout_weight="0.5"
+                android:id="@+id/SwapButton"
+                android:visibility="invisible"
+                android:text="@string/fa_exchange"/>
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Converter</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fa_times_circle">\uf057</string>
+    <string name="fa_exchange">\uf0ec</string>
+
+    <string name="fa_usd">\uf155</string>
+    <string name="fa_arrows_h">\uf07e</string>
+    <string name="fa_tachometer">\uf0e4</string>
+    <string name="fa_clone">\uf0c5</string>
+    <string name="fa_download">\uf01c</string>
+    <string name="currency">Currency</string>
+    <string name="length">Length</string>
+    <string name="speed">Speed</string>
+
+    <string-array name="currencyList">
+        <item>USD</item>
+        <item>BYN</item>
+        <item>RUB</item>
+    </string-array>
+    <string-array name="lengthList">
+        <item>мм</item>
+        <item>см</item>
+        <item>м</item>
+    </string-array>
+    <string-array name="speedList">
+        <item>м/c</item>
+        <item>км/ч</item>
+        <item>ф/с</item>
+    </string-array>
+</resources>
