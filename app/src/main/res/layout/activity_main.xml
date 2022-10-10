@@ -23,7 +23,9 @@
                 style="@style/ActionButtonText"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
-
+                app:itemIconSize="38dp"
+                app:itemTextColor="@color/white"
+                app:itemIconTint="@color/white"
                 app:menu="@menu/bottom_menu_navigation" />
         </LinearLayout>
     </LinearLayout>

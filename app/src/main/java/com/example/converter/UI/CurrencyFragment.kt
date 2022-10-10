@@ -1,10 +1,6 @@
 package com.example.converter.UI
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
-import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,11 +8,6 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
-import androidx.navigation.fragment.findNavController
-import com.example.converter.MAIN
-import com.example.converter.MainActivity
-import com.example.converter.R
 import com.example.converter.databinding.FragmentCurrencyBinding
 
 
@@ -29,6 +20,7 @@ class CurrencyFragment : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        dataModel.copy.value = ""
         super.onCreate(savedInstanceState)
 
     }
@@ -37,6 +29,7 @@ class CurrencyFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         binding = FragmentCurrencyBinding.inflate(inflater)
 
@@ -50,16 +43,17 @@ class CurrencyFragment : Fragment() {
         editTextAfter.setShowSoftInputOnFocus(false)
         super.onViewCreated(view, savedInstanceState)
 
+//
         dataModel.message.observe(activity as LifecycleOwner){
             binding.PrevText.append(it)
         }
         dataModel.delete.observe(activity as LifecycleOwner){
             binding.PrevText.setText(it)
         }
-        dataModel.paste.observe(activity as LifecycleOwner){
-            binding.AfterText.append(it)
+        dataModel.messageTemp.observe(activity as LifecycleOwner){
+            binding.PrevText.append(it)
         }
-        dataModel.paste.observe(activity as LifecycleOwner) {
+        dataModel.paste.observe(activity as LifecycleOwner){
             binding.AfterText.setText(it)
         }
         dataModel.spinBeforeSet.observe(activity as LifecycleOwner){
@@ -68,6 +62,7 @@ class CurrencyFragment : Fragment() {
         dataModel.spinAfterSet.observe(activity as LifecycleOwner){
             binding.SpinnerAfter.setSelection(it.toInt())
         }
+
         dataModel.proButton.observe(activity as LifecycleOwner) {
             if(it == "true") {
                 binding.apply {

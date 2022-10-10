@@ -40,13 +40,13 @@ class SpeedFragment : Fragment() {
         editTextAfter.setShowSoftInputOnFocus(false)
 
         dataModel.message.observe(activity as LifecycleOwner){
-            binding.PrevText?.append(it)
+            binding.PrevText.append(it)
         }
         dataModel.delete.observe(activity as LifecycleOwner){
             binding.PrevText.setText(it)
         }
-        dataModel.paste.observe(activity as LifecycleOwner){
-            binding.AfterText.append(it)
+        dataModel.messageTemp.observe(activity as LifecycleOwner){
+            binding.PrevText.append(it)
         }
         dataModel.paste.observe(activity as LifecycleOwner){
             binding.AfterText.setText(it)

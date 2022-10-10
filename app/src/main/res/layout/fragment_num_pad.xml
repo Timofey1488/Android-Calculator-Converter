@@ -101,7 +101,7 @@
         android:layout_weight="1">
         <Button
             style="@style/NumberButton"
-            android:onClick="DoubleZeroNumber"
+            android:onClick="DoubleZero"
             android:id="@+id/DoubleZeroNumber"
             android:text="00"/>
         <Button

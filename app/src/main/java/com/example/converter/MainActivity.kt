@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -44,7 +45,13 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
+    fun DoubleZero(view: View){
+        val prevText:EditText = findViewById(R.id.PrevText)
+        if(prevText.text.length.equals(0))
+            dataModel.message.value = ""
+        else
+            dataModel.message.value = "00"
+    }
     fun ZeroNumber(view: View){
         val prevText:EditText = findViewById(R.id.PrevText)
         if(prevText.text.length == 1 && prevText.text[0].equals('0'))
@@ -106,34 +113,58 @@ class MainActivity : AppCompatActivity() {
             prevText.setSelection(pos-1)
         }
     }
-    fun pasteText(view: View){
-        val myClipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        var resultString: String = ""
-        val clipData: ClipData? = myClipboard.getPrimaryClip()
-        val count = clipData?.itemCount
-        for (i in 0 until count!!) {
-            val item = clipData.getItemAt(i);
 
-            val text = item.getText().toString()
-            if(item.getText().isDigitsOnly())
-                resultString += text
+    fun pasteText(view: View){
+        val prevText:EditText = findViewById(R.id.PrevText)
+//        val myClipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+//        var resultString: String = ""
+//        val clipData: ClipData? = myClipboard.getPrimaryClip()
+//        val count = clipData?.itemCount
+//        for (i in 0 until count!!) {
+//            val item = clipData.getItemAt(i);
+//
+//            val text = item.getText().toString()
+//            if(item.getText().isDigitsOnly())
+//                resultString += text
+//        }
+//        dataModel.delete.value = resultString
+
+        dataModel.copy.observe(this as LifecycleOwner) {
+            prevText.append(it)
         }
-        dataModel.message.value = resultString
 
     }
-
+    fun copyTextAfter(view: View) {
+        val afterText: EditText = findViewById(R.id.AfterText)
+        val Str: String = afterText.text.toString()
+        if (Str.isNotEmpty()) {
+            dataModel.copy.value = afterText.text.toString()
+        } else {
+            Toast.makeText(this, "Please Enter some text", Toast.LENGTH_SHORT).show()
+        }
+    }
     fun copyText(view: View){
-        val prevText:EditText = findViewById(R.id.PrevText)
+       val prevText:EditText = findViewById(R.id.PrevText)
         val Str: String = prevText.text.toString()
         if(Str.isNotEmpty()){
-            val myClipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val myClip: ClipData = ClipData.newPlainText("Label", Str)
-            myClipboard.setPrimaryClip(myClip).toString()
+            dataModel.copy.value = prevText.text.toString()
         }
         else
         {
             Toast.makeText(this,"Please Enter some text", Toast.LENGTH_SHORT).show()
         }
+
+//        val Str: String = prevText.text.toString()
+//        if(Str.isNotEmpty()){
+//            val myClipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+//            val myClip: ClipData = ClipData.newPlainText("Label", Str)
+//            myClipboard.setPrimaryClip(myClip).toString()
+//        }
+//        else
+//        {
+//            Toast.makeText(this,"Please Enter some text", Toast.LENGTH_SHORT).show()
+//        }
+
 
     }
 

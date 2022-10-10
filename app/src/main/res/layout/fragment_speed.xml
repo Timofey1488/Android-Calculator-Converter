@@ -73,7 +73,7 @@
                 android:maxLength="12" />
 
             <Button
-                android:onClick="copyText"
+                android:onClick="copyTextAfter"
                 android:visibility="invisible"
                 android:id="@+id/CopyButtonAfter"
                 style="@style/ActionButton"

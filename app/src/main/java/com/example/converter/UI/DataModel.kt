@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 open class DataModel : ViewModel() {
     val message: MutableLiveData<String> by lazy{
         MutableLiveData<String>()
-
+    }
+    val messageTemp: MutableLiveData<String> by lazy{
+        MutableLiveData<String>()
     }
     val delete: MutableLiveData<String> by lazy{
         MutableLiveData<String>()
@@ -26,5 +28,8 @@ open class DataModel : ViewModel() {
     val proButton: MutableLiveData<String> by lazy{
         MutableLiveData<String>()
     }
-
+    val copy: MutableLiveData<String> by lazy{
+        MutableLiveData<String>()
+    }
 }
+

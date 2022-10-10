@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
-import com.example.converter.R
-import com.example.converter.databinding.FragmentCurrencyBinding
 import com.example.converter.databinding.FragmentLengthBinding
 
 class LengthFragment : Fragment() {
@@ -44,8 +42,8 @@ class LengthFragment : Fragment() {
         dataModel.delete.observe(activity as LifecycleOwner){
             binding.PrevText.setText(it)
         }
-        dataModel.paste.observe(activity as LifecycleOwner){
-            binding.AfterText.append(it)
+        dataModel.messageTemp.observe(activity as LifecycleOwner){
+            binding.PrevText.append(it)
         }
         dataModel.paste.observe(activity as LifecycleOwner){
             binding.AfterText.setText(it)

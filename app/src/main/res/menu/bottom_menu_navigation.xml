@@ -4,14 +4,18 @@
     <item
         android:id="@+id/currencyFragment"
         android:enabled="true"
+        android:icon="@drawable/currency_selector"
         android:title="@string/currency"/>
     <item
         android:id="@+id/lengthFragment"
         android:enabled="true"
+        android:icon="@drawable/lenght_selector"
         android:title="@string/length"/>
     <item
         android:id="@+id/speedFragment"
         android:enabled="true"
+        android:icon="@drawable/speed_selector"
+        app:showAsAction="ifRoom"
         android:title="@string/speed"/>
 
 </menu>

@@ -56,7 +56,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">#e68209</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textSize">21sp</item>
+        <item name="android:textSize">28sp</item>
         <item name="android:textColor">#fff</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_margin">0.7dp</item>

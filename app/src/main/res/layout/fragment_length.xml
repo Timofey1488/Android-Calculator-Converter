@@ -72,7 +72,7 @@
                 android:imeOptions="actionNone"
                 android:layout_weight="3" />
             <Button
-                android:onClick="copyText"
+                android:onClick="copyTextAfter"
                 android:visibility="invisible"
                 android:id="@+id/CopyButtonAfter"
                 style="@style/ActionButton"
