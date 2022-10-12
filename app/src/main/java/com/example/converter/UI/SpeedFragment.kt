@@ -19,7 +19,7 @@ class SpeedFragment : Fragment() {
     lateinit var editTextAfter: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onCreate(null)
 
     }
 
@@ -39,26 +39,26 @@ class SpeedFragment : Fragment() {
         editTextAfter = binding.AfterText
         editTextAfter.setShowSoftInputOnFocus(false)
 
-        dataModel.message.observe(activity as LifecycleOwner){
+        dataModel.message.observe(viewLifecycleOwner){
             binding.PrevText.append(it)
         }
-        dataModel.delete.observe(activity as LifecycleOwner){
+        dataModel.delete.observe(viewLifecycleOwner){
             binding.PrevText.setText(it)
         }
-        dataModel.messageTemp.observe(activity as LifecycleOwner){
+        dataModel.messageTemp.observe(viewLifecycleOwner){
             binding.PrevText.append(it)
         }
-        dataModel.paste.observe(activity as LifecycleOwner){
+        dataModel.paste.observe(viewLifecycleOwner){
             binding.AfterText.setText(it)
         }
-        dataModel.spinBeforeSet.observe(activity as LifecycleOwner){
+        dataModel.spinBeforeSet.observe(viewLifecycleOwner){
             binding.SpinnerBefore.setSelection(it.toInt())
         }
-        dataModel.spinAfterSet.observe(activity as LifecycleOwner){
+        dataModel.spinAfterSet.observe(viewLifecycleOwner){
             binding.SpinnerAfter.setSelection(it.toInt())
         }
 
-        dataModel.proButton.observe(activity as LifecycleOwner) {
+        dataModel.proButton.observe(viewLifecycleOwner) {
             if(it == "true") {
                 binding.apply {
 

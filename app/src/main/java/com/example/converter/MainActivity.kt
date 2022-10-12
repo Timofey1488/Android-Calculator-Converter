@@ -1,5 +1,6 @@
 package com.example.converter
 
+import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -18,6 +19,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.converter.UI.DataModel
 import com.example.converter.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.lang.Double
 
 class MainActivity : AppCompatActivity() {
     private val dataModel: DataModel by viewModels()
@@ -39,6 +41,7 @@ class MainActivity : AppCompatActivity() {
             R.id.lengthFragment,
             R.id.speedFragment
         ))
+        
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -116,6 +119,7 @@ class MainActivity : AppCompatActivity() {
 
     fun pasteText(view: View){
         val prevText:EditText = findViewById(R.id.PrevText)
+        val afterText:EditText = findViewById(R.id.AfterText)
 //        val myClipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 //        var resultString: String = ""
 //        val clipData: ClipData? = myClipboard.getPrimaryClip()
@@ -128,9 +132,13 @@ class MainActivity : AppCompatActivity() {
 //                resultString += text
 //        }
 //        dataModel.delete.value = resultString
-
-        dataModel.copy.observe(this as LifecycleOwner) {
-            prevText.append(it)
+        if(afterText.text.length > 16){
+            Toast.makeText(this,"Number > 16, you cannot do this", Toast.LENGTH_SHORT).show()
+        }
+        else {
+            dataModel.copy.observe(this as LifecycleOwner) {
+                prevText.append(it)
+            }
         }
 
     }
@@ -165,24 +173,29 @@ class MainActivity : AppCompatActivity() {
 //            Toast.makeText(this,"Please Enter some text", Toast.LENGTH_SHORT).show()
 //        }
 
-
     }
 
     fun Swap(view: View){
+
         val prevText:EditText = findViewById(R.id.PrevText)
         val afterText:EditText = findViewById(R.id.AfterText)
         val prevSpinner:Spinner = findViewById(R.id.SpinnerBefore)
         val afterSpinner:Spinner = findViewById(R.id.SpinnerAfter)
         val prevSelect = prevSpinner.selectedItemPosition
         val afterSelect = afterSpinner.selectedItemPosition
-        dataModel.spinBeforeSet.value = afterSelect.toString()
-        dataModel.spinAfterSet.value = prevSelect.toString()
-
-        val buffer:String = prevText.text.toString()
-        val strPrev:String = afterText.text.toString()
-        dataModel.delete.value = strPrev
-        dataModel.paste.value = buffer
-
+        if(afterText.length()>16){
+            Toast.makeText(this,"You cannot do this because lenght > 16", Toast.LENGTH_SHORT).show()
+        }
+        else{
+            dataModel.spinBeforeSet.value = afterSelect.toString()
+            dataModel.spinAfterSet.value = prevSelect.toString()
+            val buffer:String = prevText.text.toString()
+            val strPrev:String = afterText.text.toString()
+            dataModel.delete.value = strPrev
+            dataModel.paste.value = buffer
+//            val pos: Int = prevText.length()
+//            prevText.setSelection(pos-1)
+        }
     }
     fun ProButton(view: View){
         if(proTemp)
@@ -195,6 +208,7 @@ class MainActivity : AppCompatActivity() {
             dataModel.proButton.value = proTemp.toString()
         }
     }
+    @SuppressLint("UseValueOf")
     fun EqualButton(view:View){
         val prevSpinner:Spinner = findViewById(R.id.SpinnerBefore)
         val afterSpinner:Spinner = findViewById(R.id.SpinnerAfter)
@@ -206,26 +220,26 @@ class MainActivity : AppCompatActivity() {
                 "мм" -> {
                     when (afterSpinner.selectedItem.toString()) {
                         "мм" -> dataModel.paste.value = prevText.text.toString()
-                        "см" -> dataModel.paste.value = (prevText.text.toString().toFloat() / 10).toString()
+                        "см" -> dataModel.paste.value = (prevText.text.toString().toBigDecimal() / 10.toBigDecimal()).toString()
                         "м" ->dataModel.paste.value =
-                            (prevText.text.toString().toFloat() / 1000).toString()
+                            (prevText.text.toString().toBigDecimal() / 1000.toBigDecimal()).toString()
                     }
                 }
                 "см" -> {
                     when (afterSpinner.selectedItem.toString()) {
                         "мм" -> dataModel.paste.value =
-                            (prevText.text.toString().toFloat() * 10).toString()
+                            (prevText.text.toString().toBigDecimal() * 10.toBigDecimal()).toString()
                         "см" -> dataModel.paste.value = prevText.text.toString()
                         "м" -> dataModel.paste.value =
-                            (prevText.text.toString().toFloat() / 100).toString()
+                            (prevText.text.toString().toBigDecimal() / 100.toBigDecimal()).toString()
                     }
                 }
                 "м" -> {
                     when (afterSpinner.selectedItem.toString()) {
                         "мм" ->  dataModel.paste.value =
-                            (prevText.text.toString().toFloat() * 1000).toString()
+                            (prevText.text.toString().toBigDecimal() * 1000.toBigDecimal()).toString()
                         "см" ->  dataModel.paste.value =
-                            (prevText.text.toString().toFloat() * 100).toString()
+                            (prevText.text.toString().toBigDecimal() * 100.toBigDecimal()).toString()
                         "м" -> dataModel.paste.value = prevText.text.toString()
                     }
                 }
@@ -234,26 +248,26 @@ class MainActivity : AppCompatActivity() {
                 "USD" -> {
                     when (afterSpinner.selectedItem.toString()) {
                         "USD" -> dataModel.paste.value = prevText.text.toString()
-                        "BYN" -> dataModel.paste.value = (prevText.text.toString().toFloat() * 2.53).toString()
+                        "BYN" -> dataModel.paste.value = (prevText.text.toString().toBigDecimal() * 2.53.toBigDecimal()).toString()
                         "RUB" ->dataModel.paste.value =
-                            (prevText.text.toString().toFloat() * 62.35).toString()
+                            (prevText.text.toString().toBigDecimal() * 62.35.toBigDecimal()).toString()
                     }
                 }
                 "BYN" -> {
                     when (afterSpinner.selectedItem.toString()) {
                         "USD" -> dataModel.paste.value =
-                            (prevText.text.toString().toFloat() / 2.53).toString()
+                            (prevText.text.toString().toBigDecimal() / 2.53.toBigDecimal()).toString()
                         "BYN" -> dataModel.paste.value = prevText.text.toString()
                         "RUB" -> dataModel.paste.value =
-                            (prevText.text.toString().toFloat() * 24.60).toString()
+                            (prevText.text.toString().toBigDecimal() * 24.60.toBigDecimal()).toString()
                     }
                 }
                 "RUB" -> {
                     when (afterSpinner.selectedItem.toString()) {
                         "USD" ->  dataModel.paste.value =
-                            (prevText.text.toString().toFloat() * 0.016).toString()
+                            (prevText.text.toString().toBigDecimal() * (0.016).toBigDecimal()).toString()
                         "BYN" ->  dataModel.paste.value =
-                            (prevText.text.toString().toFloat() * 0.041).toString()
+                            (prevText.text.toString().toBigDecimal() * 0.041.toBigDecimal()).toString()
                         "RUB" -> dataModel.paste.value = prevText.text.toString()
                     }
                 }
@@ -261,29 +275,33 @@ class MainActivity : AppCompatActivity() {
                 "м/c" -> {
                     when (afterSpinner.selectedItem.toString()) {
                         "м/c" -> dataModel.paste.value = prevText.text.toString()
-                        "км/ч" -> dataModel.paste.value = (prevText.text.toString().toFloat() * 3.6).toString()
+                        "км/ч" -> dataModel.paste.value = (prevText.text.toString().toBigDecimal() * 3.6.toBigDecimal()).toString()
                         "ф/с" ->dataModel.paste.value =
-                            (prevText.text.toString().toFloat() * 3.281).toString()
+                            (prevText.text.toString().toBigDecimal() * 3.281.toBigDecimal()).toString()
                     }
                 }
                 "км/ч" -> {
                     when (afterSpinner.selectedItem.toString()) {
                         "м/c" -> dataModel.paste.value =
-                            (prevText.text.toString().toFloat() / 3.6).toString()
+                            (prevText.text.toString().toBigDecimal() / 3.6.toBigDecimal()).toString()
                         "км/ч" -> dataModel.paste.value = prevText.text.toString()
                         "ф/с" -> dataModel.paste.value =
-                            (prevText.text.toString().toFloat() / 1.097).toString()
+                            (prevText.text.toString().toBigDecimal() / 1.097.toBigDecimal()).toString()
                     }
                 }
                 "ф/с" -> {
                     when (afterSpinner.selectedItem.toString()) {
                         "м/с" ->  dataModel.paste.value =
-                            (prevText.text.toString().toFloat() / 3.281).toString()
+                            (prevText.text.toString().toBigDecimal() / 3.281.toBigDecimal()).toString()
                         "км/ч" ->  dataModel.paste.value =
-                            (prevText.text.toString().toFloat() * 1.097).toString()
+                            (prevText.text.toString().toBigDecimal() * 1.097.toBigDecimal()).toString()
                         "ф/с" -> dataModel.paste.value = prevText.text.toString()
                     }
                 }
+            }
+            if(afterText.text.toString() == "Infinity"){
+                dataModel.paste.value = ""
+                Toast.makeText(this,"This is too big number", Toast.LENGTH_SHORT).show()
             }
         }
         else

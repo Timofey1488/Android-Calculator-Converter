@@ -22,10 +22,10 @@
             android:orientation="horizontal">
 
             <EditText
+                android:maxLength="16"
                 android:id="@+id/PrevText"
                 style="@style/TextViewStyle"
                 android:layout_weight="3"
-                android:maxLength="12"
                 android:hint="Convert From"
                 android:layout_marginRight="10dp"
                 android:imeOptions="actionNone"
@@ -64,11 +64,11 @@
             android:layout_weight="1">
 
             <EditText
+
                 android:enabled="false"
                 android:id="@+id/AfterText"
                 style="@style/TextViewStyle"
                 android:hint="Convert To"
-                android:maxLength="12"
                 android:imeOptions="actionNone"
                 android:layout_weight="3" />
             <Button

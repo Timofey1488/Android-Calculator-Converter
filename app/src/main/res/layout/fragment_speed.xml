@@ -22,11 +22,12 @@
             android:orientation="horizontal">
 
             <EditText
+                android:maxLength="16"
                 android:hint="Convert From"
                 android:id="@+id/PrevText"
                 style="@style/TextViewStyle"
                 android:layout_weight="3"
-                android:maxLength="12"
+
                 android:layout_marginRight="10dp"
                 android:imeOptions="actionNone"
                 android:inputType="text" />
@@ -69,8 +70,7 @@
                 android:hint="Convert To"
                 android:layout_weight="3"
                 android:enabled="false"
-                android:imeOptions="actionNone"
-                android:maxLength="12" />
+                android:imeOptions="actionNone" />
 
             <Button
                 android:onClick="copyTextAfter"
