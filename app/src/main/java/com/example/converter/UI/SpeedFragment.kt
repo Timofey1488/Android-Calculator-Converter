@@ -19,6 +19,7 @@ class SpeedFragment : Fragment() {
     lateinit var editTextAfter: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(null)
 
     }

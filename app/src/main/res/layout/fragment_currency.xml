@@ -22,14 +22,17 @@
             android:orientation="horizontal">
 
             <EditText
+
+                android:longClickable="false"
+                android:inputType="textVisiblePassword"
                 android:maxLength="16"
+                android:importantForAutofill="no"
                 android:id="@+id/PrevText"
-                style="@style/TextViewStyle"
+                style="@style/TStyle"
                 android:layout_weight="3"
                 android:hint="Convert From"
                 android:layout_marginRight="10dp"
-                android:imeOptions="actionNone"
-                android:inputType="text" />
+                android:imeOptions="actionNone" />
 
             <Button
                 android:onClick="copyText"

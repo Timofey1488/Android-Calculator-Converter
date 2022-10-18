@@ -1,15 +1,13 @@
 package com.example.converter.UI
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.text.InputType
+import android.view.*
 import android.widget.*
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleOwner
 import com.example.converter.databinding.FragmentCurrencyBinding
-import com.example.converter.databinding.FragmentLengthBinding
+import javax.security.auth.callback.Callback
 
 
 class CurrencyFragment : Fragment() {
@@ -19,6 +17,7 @@ class CurrencyFragment : Fragment() {
     lateinit var editTextAfter: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
+12312
         super.onCreate(savedInstanceState)
 
     }
@@ -33,32 +32,40 @@ class CurrencyFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val prevText: EditText = binding.PrevText
         editTextBefore = binding.PrevText
         editTextBefore.setShowSoftInputOnFocus(false)
         editTextAfter = binding.AfterText
         editTextAfter.setShowSoftInputOnFocus(false)
 
-        dataModel.message.observe(viewLifecycleOwner){
+
+        dataModel.message.observe(viewLifecycleOwner) {
+            binding.PrevText.setInputType(InputType.TYPE_CLASS_NUMBER);
             binding.PrevText.append(it)
         }
-        dataModel.delete.observe(viewLifecycleOwner){
+        dataModel.delete.observe(viewLifecycleOwner) {
+            binding.PrevText.setInputType(InputType.TYPE_CLASS_NUMBER);
             binding.PrevText.setText(it)
         }
-        dataModel.messageTemp.observe(viewLifecycleOwner){
+        dataModel.messageTemp.observe(viewLifecycleOwner) {
+            binding.PrevText.setInputType(InputType.TYPE_CLASS_NUMBER);
             binding.PrevText.append(it)
         }
-        dataModel.paste.observe(viewLifecycleOwner){
+        dataModel.paste.observe(viewLifecycleOwner) {
+            binding.PrevText.setInputType(InputType.TYPE_CLASS_NUMBER);
             binding.AfterText.setText(it)
         }
-        dataModel.spinBeforeSet.observe(viewLifecycleOwner){
+        dataModel.spinBeforeSet.observe(viewLifecycleOwner) {
+            binding.PrevText.setInputType(InputType.TYPE_CLASS_NUMBER);
             binding.SpinnerBefore.setSelection(it.toInt())
         }
-        dataModel.spinAfterSet.observe(viewLifecycleOwner){
+        dataModel.spinAfterSet.observe(viewLifecycleOwner) {
+            binding.PrevText.setInputType(InputType.TYPE_CLASS_NUMBER);
             binding.SpinnerAfter.setSelection(it.toInt())
         }
 
         dataModel.proButton.observe(viewLifecycleOwner) {
-            if(it == "true") {
+            if (it == "true") {
                 binding.apply {
 
                     binding.CopyButtonBefore.visibility = View.VISIBLE
@@ -66,9 +73,7 @@ class CurrencyFragment : Fragment() {
                     binding.PasteButtonBefore.visibility = View.VISIBLE
                     binding.SwapButton.visibility = View.VISIBLE
                 }
-            }
-            else
-            {
+            } else {
                 binding.apply {
 
                     binding.CopyButtonBefore.visibility = View.INVISIBLE
@@ -77,13 +82,8 @@ class CurrencyFragment : Fragment() {
                     binding.SwapButton.visibility = View.INVISIBLE
                 }
             }
+
+            super.onViewCreated(view, savedInstanceState)
         }
-
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = CurrencyFragment()
     }
 }

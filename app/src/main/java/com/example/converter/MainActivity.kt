@@ -6,12 +6,12 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -19,15 +19,18 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.converter.UI.DataModel
 import com.example.converter.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.lang.Double
+
 
 class MainActivity : AppCompatActivity() {
     private val dataModel: DataModel by viewModels()
     lateinit var binding: ActivityMainBinding
     private var proTemp:Boolean  = false
 
+    val nameVariableKey1 = "NAME_VARIABLE"
+    val nameVariableKey2 = "NAME_VARIABLE"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -55,39 +58,55 @@ class MainActivity : AppCompatActivity() {
         else
             dataModel.message.value = "00"
     }
+    fun SavePosition(text: String){
+        val prevText:EditText = findViewById(R.id.PrevText)
+        val pos: Int = prevText.getSelectionStart()
+        var buildText = StringBuilder(prevText.text.toString())
+        val lenght = prevText.length()
+        if(lenght<16){
+            buildText = buildText.apply{insert(pos, text)}
+            prevText.setText(buildText)
+            prevText.setSelection(pos+1)
+        }
+        else{
+            Toast.makeText(this,"Lenght > 16", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     fun ZeroNumber(view: View){
         val prevText:EditText = findViewById(R.id.PrevText)
         if(prevText.text.length == 1 && prevText.text[0].equals('0'))
-            dataModel.message.value = ""
+            SavePosition("")
         else
-            dataModel.message.value = "0"
+            SavePosition("0")
     }
     fun OneNumber(view: View){
-        dataModel.message.value = "1"
+        SavePosition("1")
+
     }
     fun TwoNumber(view: View){
-        dataModel.message.value = "2"
+        SavePosition("2")
     }
     fun ThreeNumber(view: View){
-        dataModel.message.value = "3"
+        SavePosition("3")
     }
     fun FourNumber(view: View){
-        dataModel.message.value = "4"
+        SavePosition("4")
     }
     fun FiveNumber(view: View){
-        dataModel.message.value = "5"
+        SavePosition("5")
     }
     fun SixNumber(view: View){
-        dataModel.message.value = "6"
+        SavePosition("6")
     }
     fun SevenNumber(view: View){
-        dataModel.message.value = "7"
+        SavePosition("7")
     }
     fun EightNumber(view: View){
-        dataModel.message.value = "8"
+        SavePosition("8")
     }
     fun NineNumber(view: View){
-        dataModel.message.value = "9"
+        SavePosition("9")
     }
     fun PointNumber(view: View){
         var temp = false
@@ -97,10 +116,10 @@ class MainActivity : AppCompatActivity() {
                 temp = true
         }
         if(prevText.text.isEmpty()){
-            dataModel.message.value = "0."
+            SavePosition("0.")
         }
         else if(!temp)
-            dataModel.message.value = "."
+            SavePosition(".")
     }
     fun CNumber(view: View){
         dataModel.delete.value = ""
@@ -108,70 +127,67 @@ class MainActivity : AppCompatActivity() {
     }
     fun CircleNumber(view: View){
         val prevText:EditText = findViewById(R.id.PrevText)
-        val length = prevText.text.length
         val pos: Int = prevText.getSelectionStart()
-        if (pos > 0){
-            val text: String = prevText.text.subSequence(0, length-1).toString()
-            dataModel.delete.value = text
+        var buildText = StringBuilder(prevText.text.toString())
+        if(pos>0){
+            buildText = buildText.apply{delete(pos-1,pos)}
+            prevText.setText(buildText)
             prevText.setSelection(pos-1)
         }
+       else{
+            Toast.makeText(this,"Position < 0", Toast.LENGTH_SHORT).show()
+       }
     }
 
     fun pasteText(view: View){
         val prevText:EditText = findViewById(R.id.PrevText)
         val afterText:EditText = findViewById(R.id.AfterText)
-//        val myClipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-//        var resultString: String = ""
-//        val clipData: ClipData? = myClipboard.getPrimaryClip()
-//        val count = clipData?.itemCount
-//        for (i in 0 until count!!) {
-//            val item = clipData.getItemAt(i);
-//
-//            val text = item.getText().toString()
-//            if(item.getText().isDigitsOnly())
-//                resultString += text
-//        }
-//        dataModel.delete.value = resultString
-        if(afterText.text.length > 16){
-            Toast.makeText(this,"Number > 16, you cannot do this", Toast.LENGTH_SHORT).show()
+        val myClipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        var resultString: String = ""
+        val clipData: ClipData? = myClipboard.getPrimaryClip()
+        val count = clipData?.itemCount
+        for (i in 0 until count!!) {
+            val item = clipData.getItemAt(i);
+
+            val text = item.getText().toString()
+            if(item.getText().isDigitsOnly())
+                resultString += text
         }
-        else {
-            dataModel.copy.observe(this as LifecycleOwner) {
-                prevText.append(it)
-            }
+        var temp = prevText.text.length + resultString.length
+        if(temp > 16){
+            Toast.makeText(this,"You cannot paste because string should be less 16 symbols", Toast.LENGTH_SHORT).show()
         }
+        else{
+            dataModel.message.value = resultString
+        }
+
 
     }
     fun copyTextAfter(view: View) {
         val afterText: EditText = findViewById(R.id.AfterText)
         val Str: String = afterText.text.toString()
-        if (Str.isNotEmpty()) {
-            dataModel.copy.value = afterText.text.toString()
-        } else {
-            Toast.makeText(this, "Please Enter some text", Toast.LENGTH_SHORT).show()
-        }
-    }
-    fun copyText(view: View){
-       val prevText:EditText = findViewById(R.id.PrevText)
-        val Str: String = prevText.text.toString()
         if(Str.isNotEmpty()){
-            dataModel.copy.value = prevText.text.toString()
+            val myClipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val myClip: ClipData = ClipData.newPlainText("Label", Str)
+            myClipboard.setPrimaryClip(myClip).toString()
         }
         else
         {
             Toast.makeText(this,"Please Enter some text", Toast.LENGTH_SHORT).show()
         }
-
-//        val Str: String = prevText.text.toString()
-//        if(Str.isNotEmpty()){
-//            val myClipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-//            val myClip: ClipData = ClipData.newPlainText("Label", Str)
-//            myClipboard.setPrimaryClip(myClip).toString()
-//        }
-//        else
-//        {
-//            Toast.makeText(this,"Please Enter some text", Toast.LENGTH_SHORT).show()
-//        }
+    }
+    fun copyText(view: View){
+        val prevText:EditText = findViewById(R.id.PrevText)
+        val Str: String = prevText.text.toString()
+        if(Str.isNotEmpty()){
+            val myClipboard = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val myClip: ClipData = ClipData.newPlainText("Label", Str)
+            myClipboard.setPrimaryClip(myClip).toString()
+        }
+        else
+        {
+            Toast.makeText(this,"Please Enter some text", Toast.LENGTH_SHORT).show()
+        }
 
     }
 
@@ -193,8 +209,7 @@ class MainActivity : AppCompatActivity() {
             val strPrev:String = afterText.text.toString()
             dataModel.delete.value = strPrev
             dataModel.paste.value = buffer
-//            val pos: Int = prevText.length()
-//            prevText.setSelection(pos-1)
+            prevText.setSelection(prevText.text.length)
         }
     }
     fun ProButton(view: View){
@@ -292,13 +307,23 @@ class MainActivity : AppCompatActivity() {
                 "ф/с" -> {
                     when (afterSpinner.selectedItem.toString()) {
                         "м/с" ->  dataModel.paste.value =
-                            (prevText.text.toString().toBigDecimal() / 3.281.toBigDecimal()).toString()
+                            (prevText.text.toString().toBigDecimal() / 3.6.toBigDecimal()).toString()
                         "км/ч" ->  dataModel.paste.value =
                             (prevText.text.toString().toBigDecimal() * 1.097.toBigDecimal()).toString()
                         "ф/с" -> dataModel.paste.value = prevText.text.toString()
                     }
                 }
             }
+//            var value = afterText.text.toString()
+//            if (value.contains(".")){
+//                value = value.trimStart('0').trimEnd('0').trimEnd('.')
+//                dataModel.paste.value = value
+//            }
+//            else{
+//                value = value.trimStart('0')
+//                dataModel.paste.value = value
+//            }
+
             if(afterText.text.toString() == "Infinity"){
                 dataModel.paste.value = ""
                 Toast.makeText(this,"This is too big number", Toast.LENGTH_SHORT).show()
@@ -307,6 +332,22 @@ class MainActivity : AppCompatActivity() {
         else
             dataModel.paste.value = ""
 
+    }
+
+    // сохранение состояния
+    override fun onSaveInstanceState(outState: Bundle) {
+        val prevText:EditText = findViewById(R.id.PrevText)
+        val afterText:EditText = findViewById(R.id.AfterText)
+        outState.putString(nameVariableKey1, prevText.text.toString())
+        outState.putString(nameVariableKey2, afterText.text.toString())
+        super.onSaveInstanceState(outState)
+    }
+
+    // получение ранее сохраненного состояния
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        dataModel.message.value = savedInstanceState.getString(nameVariableKey1)
+        dataModel.paste.value = savedInstanceState.getString(nameVariableKey1)
     }
 
 }

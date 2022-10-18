@@ -18,15 +18,10 @@ class LengthFragment : Fragment() {
     lateinit var editTextAfter: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
 
     }
-
-    override fun onStop() {
-        MAIN?.getSupportFragmentManager()?.popBackStack()
-        super.onStop()
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -1,0 +1,3 @@
+<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="android:editTextStyle">@style/TStyle</item>
+</style>

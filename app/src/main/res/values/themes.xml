@@ -62,6 +62,21 @@
         <item name="android:layout_margin">0.7dp</item>
     </style>
 
+    <style name="TStyle" parent="@android:style/Widget.EditText" >
+        <item name="android:textSelectHandle">@drawable/is_empty</item>
+        <item name="android:textSelectHandleLeft">@drawable/is_empty</item>
+        <item name="android:textSelectHandleRight">@drawable/is_empty</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:topRightRadius">25dp</item>
+        <item name="android:background">#b8a793</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">0.7dp</item>
+    </style>
+
     <style name="TextViewStyle">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">50dp</item>
@@ -77,6 +92,16 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:backgroundTint">#b0130b</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">0.7dp</item>
+    </style>
+    <style name="AdditionalButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:backgroundTint">#858f6f</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textSize">21sp</item>
         <item name="android:textColor">#fff</item>
