@@ -7,7 +7,6 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.converter.databinding.FragmentCurrencyBinding
-import javax.security.auth.callback.Callback
 
 
 class CurrencyFragment : Fragment() {
@@ -17,7 +16,6 @@ class CurrencyFragment : Fragment() {
     lateinit var editTextAfter: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
-12312
         super.onCreate(savedInstanceState)
 
     }

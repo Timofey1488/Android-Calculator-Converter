@@ -1,15 +1,26 @@
 package com.example.converter.UI
 
 import android.os.Bundle
+import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.fragment.app.activityViewModels
 import com.example.converter.R
+import com.example.converter.databinding.FragmentCalculatorBinding
+import com.example.converter.databinding.FragmentCurrencyBinding
+import com.example.converter.databinding.FragmentLengthBinding
 
 class CalculatorFragment : Fragment() {
+    lateinit var binding: FragmentCalculatorBinding
+    private val dataModel: DataModel by activityViewModels()
+    lateinit var editTextBefore: EditText
+    lateinit var editTextAfter: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
     }
 
@@ -17,7 +28,32 @@ class CalculatorFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_calculator, container, false)
+        binding = FragmentCalculatorBinding.inflate(inflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val prevText: EditText = binding.PrevText
+        editTextBefore = binding.PrevText
+        editTextBefore.setShowSoftInputOnFocus(false)
+        editTextAfter = binding.AfterText
+        editTextAfter.setShowSoftInputOnFocus(false)
+
+        dataModel.message.observe(viewLifecycleOwner) {
+            binding.PrevText.append(it)
+        }
+        dataModel.delete.observe(viewLifecycleOwner) {
+            binding.PrevText.setText(it)
+        }
+        dataModel.messageTemp.observe(viewLifecycleOwner) {
+            binding.PrevText.append(it)
+        }
+        dataModel.paste.observe(viewLifecycleOwner) {
+            binding.AfterText.setText(it)
+        }
+        dataModel.change.observe(viewLifecycleOwner) {
+            binding.AfterText.append(it)
+        }
     }
 
     companion object {

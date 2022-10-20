@@ -9,6 +9,7 @@ class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+        getSupportActionBar()?.hide();
     }
     fun convertor_btn_menu(view: View){
         var intent = Intent(this, MainActivity::class.java)

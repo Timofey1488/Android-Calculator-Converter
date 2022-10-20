@@ -30,11 +30,10 @@ class MainActivity : AppCompatActivity() {
     val nameVariableKey2 = "NAME_VARIABLE"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        MAIN = this
+
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
@@ -51,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+    //Converter Code
     fun DoubleZero(view: View){
         val prevText:EditText = findViewById(R.id.PrevText)
         if(prevText.text.length.equals(0))

@@ -1,14 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UI.NumPadCalculator">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="fill_parent"
+        android:layout_weight="0.9"
+        android:orientation="vertical">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <Button
+                android:onClick="oneToXButton"
+                style="@style/AdditionalButton"
+                android:text="ln"/>
+            <Button
+                android:onClick="powButton"
+                style="@style/AdditionalButton"
+                android:text="e"/>
+            <Button
+                android:onClick="powThreeButton"
+                style="@style/AdditionalButton"
+                android:text="sqrt"/>
+            <Button
+                style="@style/AdditionalButton"
+                android:onClick="factorialButton"
+                android:text="log"
+                tools:ignore="TextContrastCheck" />
 
-</FrameLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <Button
+                android:onClick="oneToXButton"
+                style="@style/AdditionalButton"
+                android:text="sin"/>
+            <Button
+                android:onClick="powButton"
+                style="@style/AdditionalButton"
+                android:text="cos"/>
+            <Button
+                android:onClick="powThreeButton"
+                style="@style/AdditionalButton"
+                android:text="tg"/>
+            <Button
+                style="@style/AdditionalButton"
+                android:onClick="factorialButton"
+                android:text="PI"
+                tools:ignore="TextContrastCheck" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <Button
+                android:onClick="oneToXButton"
+                style="@style/AdditionalButton"
+                android:text="1/x"/>
+            <Button
+                android:onClick="powButton"
+                style="@style/AdditionalButton"
+                android:text="x^2"/>
+            <Button
+                android:onClick="powThreeButton"
+                style="@style/AdditionalButton"
+                android:text="x^3"/>
+            <Button
+                style="@style/AdditionalButton"
+                android:onClick="factorialButton"
+                android:text="x!"
+                tools:ignore="TextContrastCheck" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <Button
+                android:onClick="bracketFirstNumber"
+                style="@style/AdditionalButton"
+                android:text="("/>
+            <Button
+                android:onClick="bracketSecondNumber"
+                style="@style/AdditionalButton"
+                android:text=")"/>
+            <Button
+                android:onClick="plusMinusNumber"
+                style="@style/AdditionalButton"
+                android:text="+-"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <Button
+                style="@style/ActionButton"
+                android:onClick="CircleNumber"
+                android:text="@string/fa_times_circle"
+                tools:ignore="TextContrastCheck" />
+            <Button
+                style="@style/ActionButton"
+                android:onClick="CNumber"
+                android:text="C" />
+
+            <Button
+                style="@style/ActionButton"
+                android:onClick="PercentNumber"
+                android:text="%"/>
+
+            <Button
+                style="@style/ActionButton"
+                android:onClick="minusNumber"
+                android:text="-"
+                tools:ignore="TextContrastCheck" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <Button
+                android:onClick="SevenNumber"
+                style="@style/NumberButton"
+                android:text="7"/>
+            <Button
+                android:onClick="EightNumber"
+                style="@style/NumberButton"
+                android:text="8"/>
+            <Button
+                style="@style/NumberButton"
+                android:onClick="NineNumber"
+                android:text="9"/>
+            <Button
+                android:onClick="multipleNumber"
+                style="@style/ActionButton"
+                android:text="*"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <Button
+                style="@style/NumberButton"
+                android:onClick="FourNumber"
+                android:text="4"/>
+            <Button
+                style="@style/NumberButton"
+                android:onClick="FiveNumber"
+                android:text="5"/>
+            <Button
+                style="@style/NumberButton"
+                android:onClick="SixNumber"
+                android:text="6"/>
+            <Button
+                android:onClick="delNumber"
+                style="@style/ActionButton"
+                android:text="/"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <Button
+                style="@style/NumberButton"
+                android:onClick="OneNumber"
+                android:id="@+id/OneNumber"
+                android:text="1"/>
+            <Button
+                style="@style/NumberButton"
+                android:onClick="TwoNumber"
+                android:id="@+id/TwoNumber"
+                android:text="2"/>
+            <Button
+                style="@style/NumberButton"
+                android:onClick="ThreeNumber"
+                android:id="@+id/ThreeNumber"
+                android:text="3"/>
+            <Button
+                style="@style/ActionButton"
+                android:onClick="plusNumber"
+                android:id="@+id/plusNumber"
+                android:text="+"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <Button
+                style="@style/NumberButton"
+                android:onClick="DoubleZero"
+                android:id="@+id/DoubleZeroNumber"
+                android:text="00"/>
+            <Button
+                style="@style/NumberButton"
+                android:onClick="ZeroNumber"
+                android:id="@+id/ZeroNumber"
+                android:text="0"/>
+            <Button
+                android:onClick="PointNumber"
+                style="@style/NumberButton"
+                android:id="@+id/PointNumber"
+                android:text="."/>
+            <Button
+                android:onClick="equalButton"
+                style="@style/ActionButton"
+                android:textSize="40dp"
+                android:text="="/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
