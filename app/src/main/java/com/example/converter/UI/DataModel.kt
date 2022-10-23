@@ -10,6 +10,9 @@ open class DataModel : ViewModel() {
     val messageTemp: MutableLiveData<String> by lazy{
         MutableLiveData<String>()
     }
+    val minusDelete: MutableLiveData<String> by lazy{
+        MutableLiveData<String>()
+    }
     val delete: MutableLiveData<String> by lazy{
         MutableLiveData<String>()
     }

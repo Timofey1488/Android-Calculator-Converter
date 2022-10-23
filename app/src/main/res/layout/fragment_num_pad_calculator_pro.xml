@@ -118,14 +118,13 @@
             <Button
                 style="@style/ActionButton"
                 android:onClick="CNumber"
-
                 android:id="@+id/CNumber"
                 android:text="C" />
 
             <Button
                 style="@style/ActionButton"
-                android:onClick="PercentNumber"
-                android:text="%"/>
+                android:onClick="percentNumber"
+                android:text="%" />
             <Button
                 android:id="@+id/minusNumber"
                 style="@style/ActionButton"

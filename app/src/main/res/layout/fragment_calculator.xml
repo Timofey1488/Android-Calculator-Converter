@@ -3,25 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
 
-    android:layout_height="200dp"
+    android:layout_height="220dp"
     android:orientation="vertical"
     tools:context=".UI.CalculatorFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
             <EditText
+                android:cursorVisible="true"
+                android:enabled="false"
                 android:paddingRight="3dp"
                 android:id="@+id/PrevText"
                 style="@style/TextViewFirstStyle"
@@ -31,12 +33,33 @@
                 android:importantForAutofill="no"
                 android:inputType="textVisiblePassword"
                 android:longClickable="false"
-                android:maxLength="16"
                 android:textColor="#000000" />
-
+            <requestFocus/>
         </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/AfterText"
+                style="@style/TextViewAdditionalStyle"
+                android:layout_width="380dp"
+                android:enabled="false"
+                android:imeOptions="actionNone"
+                android:paddingRight="3dp" />
+        </LinearLayout>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
@@ -48,13 +71,16 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <EditText
-                android:paddingRight="3dp"
-                android:id="@+id/AfterText"
-                style="@style/TextViewAdditionalStyle"
-                android:layout_width="380dp"
-                android:enabled="false"
-                android:imeOptions="actionNone" />
+            <Button
+                android:onClick="arrowLeft"
+                style="@style/ActionButton"
+                android:textSize="25dp"
+                android:text="@string/fa_arrow_circle_left"/>
+            <Button
+                android:onClick="arrowRight"
+                android:textSize="25dp"
+                style="@style/ActionButton"
+                android:text="@string/fa_arrow_circle_right"/>
         </LinearLayout>
     </LinearLayout>
 

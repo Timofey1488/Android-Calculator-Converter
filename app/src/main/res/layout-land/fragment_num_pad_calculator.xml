@@ -17,17 +17,21 @@
             <Button
                 android:onClick="oneToXButton"
                 style="@style/AdditionalButton"
+                android:textSize="17dp"
                 android:text="ln"/>
             <Button
                 android:onClick="powButton"
+                android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text="e"/>
             <Button
                 android:onClick="powThreeButton"
+                android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text="sqrt"/>
             <Button
                 style="@style/AdditionalButton"
+                android:textSize="17dp"
                 android:onClick="factorialButton"
                 android:text="log"
                 tools:ignore="TextContrastCheck" />
@@ -40,18 +44,22 @@
             android:layout_weight="1">
             <Button
                 android:onClick="oneToXButton"
+                android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text="sin"/>
             <Button
                 android:onClick="powButton"
+                android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text="cos"/>
             <Button
                 android:onClick="powThreeButton"
+                android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text="tg"/>
             <Button
                 style="@style/AdditionalButton"
+                android:textSize="17dp"
                 android:onClick="factorialButton"
                 android:text="PI"
                 tools:ignore="TextContrastCheck" />
@@ -64,18 +72,22 @@
             android:layout_weight="1">
             <Button
                 android:onClick="oneToXButton"
+                android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text="1/x"/>
             <Button
                 android:onClick="powButton"
+                android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text="x^2"/>
             <Button
                 android:onClick="powThreeButton"
+                android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text="x^3"/>
             <Button
                 style="@style/AdditionalButton"
+                android:textSize="17dp"
                 android:onClick="factorialButton"
                 android:text="x!"
                 tools:ignore="TextContrastCheck" />
@@ -88,14 +100,17 @@
             android:layout_weight="1">
             <Button
                 android:onClick="bracketFirstNumber"
+                android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text="("/>
             <Button
                 android:onClick="bracketSecondNumber"
+                android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text=")"/>
             <Button
                 android:onClick="plusMinusNumber"
+                android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text="+-"/>
         </LinearLayout>
@@ -112,17 +127,20 @@
             android:layout_weight="1">
             <Button
                 style="@style/ActionButton"
+                android:textSize="19dp"
                 android:onClick="CircleNumber"
                 android:text="@string/fa_times_circle"
                 tools:ignore="TextContrastCheck" />
             <Button
                 style="@style/ActionButton"
+                android:textSize="19dp"
                 android:onClick="CNumber"
                 android:text="C" />
 
             <Button
                 style="@style/ActionButton"
-                android:onClick="PercentNumber"
+                android:textSize="19dp"
+                android:onClick="percentNumber"
                 android:text="%"/>
 
             <Button

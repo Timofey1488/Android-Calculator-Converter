@@ -36,6 +36,7 @@ class CalculatorFragment : Fragment() {
         val prevText: EditText = binding.PrevText
         editTextBefore = binding.PrevText
         editTextBefore.setShowSoftInputOnFocus(false)
+        editTextBefore.setCursorVisible(true)
         editTextAfter = binding.AfterText
         editTextAfter.setShowSoftInputOnFocus(false)
 
@@ -46,7 +47,12 @@ class CalculatorFragment : Fragment() {
             binding.PrevText.setText(it)
         }
         dataModel.messageTemp.observe(viewLifecycleOwner) {
-            binding.PrevText.append(it)
+            binding.PrevText.text.insert(0, "-")
+            binding.PrevText.setSelection(binding.PrevText.text.length)
+        }
+        dataModel.minusDelete.observe(viewLifecycleOwner) {
+            binding.PrevText.text.delete(0,1)
+            binding.PrevText.setSelection(binding.PrevText.text.length)
         }
         dataModel.paste.observe(viewLifecycleOwner) {
             binding.AfterText.setText(it)

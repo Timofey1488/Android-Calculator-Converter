@@ -1,25 +1,27 @@
 package com.example.converter
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.PackageManagerCompat.LOG_TAG
 import com.example.converter.UI.DataModel
 import com.example.converter.UI.NumPadCalculator
 import com.example.converter.UI.NumPadCalculatorPro
 import java.math.BigDecimal
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.*
 import kotlin.collections.ArrayDeque
-
+import kotlin.math.roundToInt
 
 class CalculatorActivity : AppCompatActivity() {
     private val dataModel: DataModel by viewModels()
     private var operation: Boolean = false
-    private var equalCheck: Boolean = false
     private var bracketOpenCount: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(null)
         setContentView(R.layout.activity_calculator)
@@ -52,7 +54,7 @@ class CalculatorActivity : AppCompatActivity() {
 
     fun StringToRPN(str:String):String{
         var final:String = ""
-        var stack = ArrayDeque<Char>()
+        val stack = ArrayDeque<Char>()
         var priority:Int
         for(i in 0 until str.length){
             priority = getPriority(str[i])
@@ -81,9 +83,27 @@ class CalculatorActivity : AppCompatActivity() {
         return final
     }
 
-    fun RPNToFinalString(str:String):Double{
+    private fun format(number: String, scale: Int): String {
+        val value = BigDecimal(number)
+        val symbols: DecimalFormatSymbols = DecimalFormatSymbols.getInstance(Locale.US)
+        val positive = BigDecimal(1) // scale is zero
+        positive.setScale(0) // unnecessary
+        val negative = BigDecimal(-1) // scale is zero
+        negative.setScale(0) // unnecessary
+        if (value.compareTo(positive) == 1 || value.compareTo(negative) == -1) {
+            symbols.setExponentSeparator("e+")
+        } else {
+            symbols.setExponentSeparator("e")
+        }
+        val formatter = DecimalFormat("0.0E0", symbols)
+        formatter.roundingMode = RoundingMode.HALF_UP
+        formatter.minimumFractionDigits = scale
+        return formatter.format(value)
+    }
+
+    fun RPNToFinalString(str:String):BigDecimal{
         var operand:String = ""
-        var stack = ArrayDeque<Double>()
+        var stack = ArrayDeque<BigDecimal>()
         var temp:Int = 0
         for(i in 0 until str.length){
             if(temp > 0 && temp > i) {
@@ -97,21 +117,21 @@ class CalculatorActivity : AppCompatActivity() {
                     operand += str[temp]
                     temp += 1
                 }
-                stack.addLast(operand.toDouble())
+                stack.addLast(operand.toBigDecimal())
                 operand = ""
 
             }
             if(getPriority(str[i]) > 1){
-                var a:Double = stack.removeLast()
-                var b:Double = stack.removeLast()
+                var a:BigDecimal = stack.removeLast()
+                var b:BigDecimal = stack.removeLast()
                 if(str[i] == '+')
-                    stack.addLast(b+a)
+                    stack.addLast(b.add(a))
                 if(str[i] == '-')
-                    stack.addLast(b-a)
+                    stack.addLast(b.subtract(a))
                 if(str[i] == '*')
-                    stack.addLast(b*a)
+                    stack.addLast(b.multiply(a))
                 if(str[i] == '/')
-                    stack.addLast(b/a)
+                    stack.addLast(b.divide(a, 16, RoundingMode.HALF_UP))
             }
         }
         return stack.removeLast()
@@ -123,18 +143,203 @@ class CalculatorActivity : AppCompatActivity() {
         else if(symbol== ')') return -1
         else return 0
     }
+    fun preparingFormatForRPN(str:String):String{
+        var preparingString:String = ""
+        var posCloseBracket:Int =0
+        var temp:Boolean = false
+        for (i in 0 until str.length){
+            var ch:Char = str[i]
+            if(ch == '-'){
+                if(i == 0)
+                    preparingString +="0"
+                else if(str[i-1] == '(')
+                    preparingString +="0"
+                else if(str[i-1] == '*' ||str[i-1] == '/'||str[i-1] == '+'||str[i-1] == '-')
+                {
+                    temp = true
+                    preparingString +="(0"
+                    for (j in i+1 until str.length){
+                        if(str[j] == '+'||str[j] == '-'||str[j] == '/'||str[j] == '*')
+                            posCloseBracket = j
+                        else if(j==str.length-1)
+                            posCloseBracket = j
+                    }
+                }
+            }
+            preparingString += ch
+            if(i == posCloseBracket && temp){
+                preparingString +=")"
+                temp = false
+            }
+        }
+        return preparingString
+    }
     //Calculator Code
     fun equalButton(view: View){
         val afterText:EditText = findViewById(R.id.AfterText)
         val prevText:EditText = findViewById(R.id.PrevText)
-        if(equalCheck)
-            dataModel.paste.value = ""
-
+        val pos: Int =0
+        var isDigit:Boolean = false
+        for(i in 0 until afterText.text.length){
+            if(afterText.text[i].isDigit()) isDigit = true
+        }
+        if(afterText.text.length == 0){
+            Toast.makeText(this, "Select action", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(!isDigit ||bracketOpenCount !=0){
+            Toast.makeText(this, "Wrong expression", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(!prevText.text.contains("e") && (prevText.text.contains("+")  || prevText.text.contains("/") || prevText.text.contains("*"))){
+            Toast.makeText(this, "Wrong expression", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(!prevText.text.contains("e") && prevText.text.contains("-") ){
+            if(prevText.text[0] != '-'){
+                Toast.makeText(this, "Wrong expression", Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
+        if(afterText.text.contains("/") && prevText.text.toString() == "0"){
+            Toast.makeText(this, "You could't devide by zero", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(testNumberLessZero()){
+            Toast.makeText(this,"Number < 0", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(afterText.text.contains("=")){
+            dataModel.paste.value = cursorPointer(prevText.text.toString())
+            dataModel.change.value = "="
+            return
+        }
         if(!prevText.text.isEmpty())
             dataModel.change.value = prevText.text.toString()
-        val result:Double =  RPNToFinalString(StringToRPN(afterText.text.toString()))
-        dataModel.delete.value = result.toString()
-        equalCheck = true
+        val prepareStr:String = preparingFormatForRPN(afterText.text.toString())
+        val result:BigDecimal =  RPNToFinalString(StringToRPN(prepareStr))
+        val formatStr: String = deleteZeroesInString(result.toString())
+        if(result.toString().contains(".")){
+            var posPoint:Int = 0
+            var str:String = result.toString()
+            for (i in 0 until str.length){
+                if(str[i] == '.'){
+                    posPoint = i
+                    break
+                }
+            }
+            var result_:BigDecimal = deleteZeroesInString(result.toString()).toBigDecimal()
+            if(str.length-posPoint>16 && str.length<22){
+                var temp:Int = 0
+                var count:Int = 0
+                for (i in posPoint+1 until str.length){
+                    if(str[i] != '0')
+                        count++
+                }
+                if(count <3)
+                    dataModel.delete.value = ((result_.toDouble() * 1000).roundToInt().toDouble() / 1000).toString()
+                else {
+                    for (i in posPoint + 4 until str.length)
+                        if (str[i] != '0')
+                            temp = i - posPoint + 4
+                    dataModel.delete.value = ((result_.toDouble() * temp).roundToInt().toDouble() / temp).toString()
+                }
+            }
+            else if(str.contains("E"))
+                dataModel.delete.value = formatStr
+            else if(posPoint < 14) {
+                dataModel.delete.value = ((result_.toDouble() * 100).roundToInt().toDouble() / 100).toString()
+            }
+            else
+                dataModel.delete.value = ((result_.toDouble() * 10).roundToInt().toDouble() / 10).toString()
+
+        } //result.toString().length > 16
+        else if(result.toString().length > 16)
+            dataModel.delete.value = format(deleteZeroesInString(result.toString()), 2)
+        else
+            dataModel.delete.value = formatStr
+        prevText.setSelection(pos)
+        dataModel.change.value = "="
+        prevText.setSelection(prevText.text.length)
+
+    }
+    fun deleteFromZeroAndPoint(str:String):String{
+        if(str.length >= 2 && str[str.length-2] == '.' && str.last() == '0'){
+            return str.replaceRange(str.length-2,str.length,"")
+        }
+        else
+            return str
+    }
+
+    fun deleteZeroesInString(str:String):String{
+        var final: Boolean = false
+        var posStart:Int = 0
+
+        for (i in 0 until str.length-1){
+            if(str[i] == '0'){
+                posStart = i
+                for (j in i+1 until str.length){
+                    if(str[j] == '0' && j!=str.length-1) continue
+                    if(j==str.length-1 && str[j] =='0') final = true
+                    else{
+                        break
+                    }
+                }
+            }
+            if(final) break
+        }
+        if(final)
+            return deleteFromZeroAndPoint(str.replaceRange(posStart,str.length,""))
+        else return deleteFromZeroAndPoint(str)
+    }
+    fun percentPoint(number:BigDecimal):Int{
+        val prevText:EditText = findViewById(R.id.PrevText)
+        val str:String = deleteZeroesInString(prevText.text.toString())
+        var pos:Int = 0
+        var count:Int = 0
+        if(prevText.text.contains(".")){
+            for(i in 0 until str.length){
+                if (str[i] == '.'){
+                    pos = i
+                    break
+                }
+            }
+            for (i in pos until str.length){
+                count++
+            }
+        }
+        return count
+    }
+
+    fun percentNumber(view:View){
+        val prevText:EditText = findViewById(R.id.PrevText)
+        var checkMinus = false
+        if(prevText.text.toString() == "0" || prevText.text.isEmpty()){
+            dataModel.delete.value = "0"
+            return
+        }
+        if( prevText.text.contains("e") || prevText.text.contains("E")){
+            Toast.makeText(this, "You couldn't use this expression", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if(prevText.text.contains("-")){
+            dataModel.minusDelete.value = ""
+            checkMinus = true
+        }
+
+        val str:String = prevText.text.toString()
+        val numberA:BigDecimal = str.toBigDecimal()
+        val numberB:Double = 100.0
+        var numbersAfterPoint:Int = percentPoint(numberA)
+        if(prevText.text.length>2 && !prevText.text.contains("."))
+            dataModel.delete.value = numberA.divide(numberB.toBigDecimal(), 2, RoundingMode.HALF_UP).toString()
+        else if(prevText.text.length>2)
+            dataModel.delete.value = numberA.divide(numberB.toBigDecimal(), numbersAfterPoint+1, RoundingMode.HALF_UP).toString()
+        else
+            dataModel.delete.value = numberA.divide(numberB.toBigDecimal(), prevText.text.length, RoundingMode.HALF_UP).toString()
+        if(checkMinus)
+            dataModel.messageTemp.value = "-"
     }
 
     fun proButtonCalculator(view: View){
@@ -149,13 +354,6 @@ class CalculatorActivity : AppCompatActivity() {
             .commit()
     }
 
-    fun DoubleZero(view: View){
-        val prevText: EditText = findViewById(R.id.PrevText)
-        if(prevText.text.length.equals(0))
-            Toast.makeText(this,"Lenght = 0", Toast.LENGTH_SHORT).show()
-        else
-            dataModel.message.value = "00"
-    }
     fun SavePosition(text: String){
         if(operation)
             operationClear()
@@ -164,10 +362,18 @@ class CalculatorActivity : AppCompatActivity() {
         val pos: Int = prevText.getSelectionStart()
         var buildText = StringBuilder(prevText.text.toString())
         val lenght = prevText.length()
-        if(lenght<16){
-            buildText = buildText.apply{insert(pos, text)}
+        if(lenght<16 && !prevText.text.isEmpty()){
+            if(prevText.text.contains("|"))
+                buildText = buildText.apply{insert(pos-1, text)}
+            else
+                buildText = buildText.apply{insert(pos, text)}
             prevText.setText(buildText)
             prevText.setSelection(pos+1)
+        }
+        else if(prevText.text.isEmpty()){
+            buildText = buildText.apply{insert(pos, text)}
+            prevText.setText(buildText)
+            prevText.setSelection(prevText.selectionStart+1)
         }
         else{
             Toast.makeText(this,"Lenght > 16", Toast.LENGTH_SHORT).show()
@@ -183,10 +389,51 @@ class CalculatorActivity : AppCompatActivity() {
             dataModel.message.value = "0"
             return
         }
-        if(prevText.text.length == 1 && prevText.text[0].equals('0'))
-            dataModel.message.value = ""
+        if(prevText.text.length == 1 && prevText.text.toString() == "0"){
+            Toast.makeText(this,"Lenght = 0", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val posCursor:Int = prevText.selectionStart
+        if(testZeroPrevPoint(cursorPointer(prevText.text.toString()),posCursor-1))
+            return
         else
-            dataModel.message.value = "0"
+            SavePosition("0")
+    }
+    fun testZeroPrevPoint(str:String,pos:Int):Boolean{
+        if(str.contains('.')){
+            var posPoint:Int = 0
+            for(i in 0 until str.length){
+                if(str[i] == '.'){
+                    posPoint = i
+                    break
+                }
+            }
+            if(posPoint !=0 && pos < posPoint){
+                if(str[posPoint-1] == '0'){
+                    Toast.makeText(this,"Unacceptable number", Toast.LENGTH_SHORT).show()
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    fun DoubleZero(view: View){
+        val prevText: EditText = findViewById(R.id.PrevText)
+        if(prevText.text.length == 1 && prevText.text.toString() == "0"){
+            Toast.makeText(this,"Lenght = 0", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val posCursor:Int = prevText.selectionStart
+        if(testZeroPrevPoint(prevText.text.toString(),posCursor))
+            return
+        else{
+            if(prevText.text.length+2 <= 16){
+                SavePosition("00")
+                prevText.setSelection(prevText.getSelectionStart()+1)
+            }
+        }
+
+
     }
     fun OneNumber(view: View){
         SavePosition("1")
@@ -242,7 +489,7 @@ class CalculatorActivity : AppCompatActivity() {
         val pos: Int = prevText.getSelectionStart()
         var buildText = StringBuilder(prevText.text.toString())
         if(pos>0){
-            buildText = buildText.apply{delete(pos-1,pos)}
+            buildText = buildText.apply{delete(pos-2,pos-1)}
             prevText.setText(buildText)
             prevText.setSelection(pos-1)
         }
@@ -252,10 +499,15 @@ class CalculatorActivity : AppCompatActivity() {
     }
     fun testNumberLessZero():Boolean{
         val prevText:EditText = findViewById(R.id.PrevText)
-        if(!prevText.text.isEmpty()){
-            if(prevText.text[0] == '0')
+        var prevTextCursor:String = cursorPointer(prevText.text.toString())
+        if(!prevTextCursor.isEmpty()){
+            if(prevTextCursor[0] == '0' && prevTextCursor.length == 1)
             {
-                if (!prevText.text.contains("."))
+                return false
+            }
+            if(prevTextCursor[0] == '0')
+            {
+                if (!prevTextCursor.contains("."))
                     return true
             }
         }
@@ -273,11 +525,26 @@ class CalculatorActivity : AppCompatActivity() {
         return !afterText.text.isEmpty() &&(afterText.text.last() == '*' ||
                 afterText.text.last() == '/' ||
                 afterText.text.last() == '+' ||
-                afterText.text.last() == '-' )
+                afterText.text.last() == '-' ||
+                afterText.text.last() == '=')
     }
     fun testsForAllOperation(operationChar: String){
         val afterText:EditText = findViewById(R.id.AfterText)
         val prevText:EditText = findViewById(R.id.PrevText)
+        var pos:Int = prevText.getSelectionStart()
+        val tempStr:String = prevText.text.toString()
+        prevText.setText(cursorPointer(prevText.text.toString()))
+        if(prevText.text.contains("e")|| prevText.text.contains("E")){
+            Toast.makeText(this, "You don't use this expression for action", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(afterText.text.contains("=")){
+            dataModel.paste.value = cursorPointer(prevText.text.toString())
+            dataModel.change.value = operationChar
+            operation = true
+
+            return
+        }
         if(testOperation() && operation){
             afterText.setText(removeLastChar(afterText.text.toString()))
             dataModel.change.value = operationChar
@@ -325,7 +592,7 @@ class CalculatorActivity : AppCompatActivity() {
             Toast.makeText(this,"Number < 0", Toast.LENGTH_SHORT).show()
             return
         }
-        dataModel.change.value = prevText.text.toString()
+        dataModel.change.value = cursorPointer(prevText.text.toString())
         dataModel.change.value = operationChar
         operation = true
     }
@@ -360,6 +627,66 @@ class CalculatorActivity : AppCompatActivity() {
         }
     }
     fun plusMinusNumber(view: View){
+        val prevText:EditText = findViewById(R.id.PrevText)
+
+        if(!prevText.text.contains("-")){
+            dataModel.messageTemp.value = "-"
+        }
+        else{
+            dataModel.minusDelete.value = ""
+        }
+    }
+    fun cursorPointer(str:String):String{
+        var finalStr:String = ""
+        for (i in 0 until str.length)
+            if(str[i] != '|')
+                finalStr = finalStr.plus(str[i])
+        return finalStr
+    }
+
+    fun arrowLeft(view: View){
+        val prevText:EditText = findViewById(R.id.PrevText)
+        var pos:Int = prevText.getSelectionStart()
+
+
+        if(pos != 0 && prevText.text.isNotEmpty()){
+            if(prevText.text.contains("|")){
+                prevText.setText(cursorPointer(prevText.text.toString()))
+                pos--
+                if(pos-1 < 0)
+                    prevText.text.insert(pos,"|")
+                else{
+                    prevText.setSelection(pos-1)
+                    prevText.text.insert(pos-1,"|")
+                }
+            }
+            else{
+                prevText.setSelection(pos-1)
+                prevText.text.insert(pos-1,"|")
+            }
+        }
+        else
+            prevText.setSelection(0)
 
     }
+    fun arrowRight(view: View){
+        val prevText:EditText = findViewById(R.id.PrevText)
+        var pos:Int = prevText.getSelectionStart()
+        if(pos != prevText.text.length && prevText.text.isNotEmpty()){
+            if(prevText.text.contains("|")){
+                prevText.setText(cursorPointer(prevText.text.toString()))
+                pos--
+                prevText.setSelection(pos+1)
+                prevText.text.insert(pos+1,"|")
+            }
+            else{
+                prevText.setSelection(pos+1)
+                prevText.text.insert(pos+1,"|")
+            }
+        }
+        else
+            prevText.setSelection(prevText.text.length)
+
+    }
+
 }

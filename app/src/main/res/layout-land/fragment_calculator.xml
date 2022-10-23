@@ -3,21 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
 
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".UI.CalculatorFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="30dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -37,6 +37,25 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:enabled="false"
+                android:id="@+id/AfterText"
+                style="@style/TextViewAdditionalStyle"
+                android:hint="0"
+                android:imeOptions="actionNone"/>
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:orientation="vertical">
@@ -46,14 +65,17 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <EditText
-
-                android:enabled="false"
-                android:id="@+id/AfterText"
-                style="@style/TextViewAdditionalStyle"
-                android:hint=""
-                android:imeOptions="actionNone"/>
+            <Button
+                android:onClick="arrowLeft"
+                style="@style/ActionButton"
+                android:textSize="25dp"
+                android:text="@string/fa_arrow_circle_left"/>
+            <Button
+                android:onClick="arrowRight"
+                android:textSize="25dp"
+                style="@style/ActionButton"
+                android:text="@string/fa_arrow_circle_right"/>
         </LinearLayout>
-    </LinearLayout>
 
+</LinearLayout>
 </LinearLayout>

@@ -13,6 +13,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="ActionButton">
         <item name="android:layout_width">0dp</item>
         <item name="android:padding">0dp</item>
@@ -25,8 +26,8 @@
         <item name="android:layout_margin">0.7dp</item>
         <item name="fontFamily">@font/fontawesome</item>
         <item name="android:text">#fa_times_circle</item>
-
     </style>
+
     <style name="ActionButtonText">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
@@ -101,7 +102,7 @@
     </style>
     <style name="TextViewAdditionalStyle">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:topRightRadius">25dp</item>
         <item name="android:background">#fff</item>
         <item name="android:layout_weight">1</item>

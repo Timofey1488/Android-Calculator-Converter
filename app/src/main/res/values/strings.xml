@@ -8,6 +8,8 @@
     <string name="fa_tachometer">\uf0e4</string>
     <string name="fa_clone">\uf0c5</string>
     <string name="fa_calculator">\uf1ec</string>
+    <string name="fa_arrow_circle_left">\uf0a8</string>
+    <string name="fa_arrow_circle_right">\uf0a9 </string>
     <string name="fa_download">\uf01c</string>
     <string name="currency">Currency</string>
     <string name="calculator">Calculator</string>

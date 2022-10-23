@@ -53,7 +53,7 @@
 
             <Button
                 style="@style/ActionButton"
-                android:onClick="PercentNumber"
+                android:onClick="percentNumber"
                 android:text="%"/>
             <Button
                 style="@style/ActionButton"
