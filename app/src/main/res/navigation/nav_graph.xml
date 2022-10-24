@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/currencyFragment"
-        android:name="com.example.converter.UI.CurrencyFragment"
+        android:name="com.example.converter.UIConverter.CurrencyFragment"
         android:label="Currency"
         tools:layout="@layout/fragment_currency" />
     <fragment
         android:id="@+id/lengthFragment"
-        android:name="com.example.converter.UI.LengthFragment"
+        android:name="com.example.converter.UIConverter.LengthFragment"
         android:label="Length"
         tools:layout="@layout/fragment_length" />
     <fragment
         android:id="@+id/speedFragment"
-        android:name="com.example.converter.UI.SpeedFragment"
+        android:name="com.example.converter.UIConverter.SpeedFragment"
         android:label="Speed"
         tools:layout="@layout/fragment_speed" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.converter.UI
+package com.example.converter.UIConverter
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

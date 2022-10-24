@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.NumPadCalculator">
+    tools:context=".UIConverter.NumPadCalculator">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
@@ -15,24 +15,24 @@
             android:layout_height="0dp"
             android:layout_weight="1">
             <Button
-                android:onClick="oneToXButton"
+                android:onClick="lnButton"
                 style="@style/AdditionalButton"
                 android:textSize="17dp"
                 android:text="ln"/>
             <Button
-                android:onClick="powButton"
+                android:onClick="eButton"
                 android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text="e"/>
             <Button
-                android:onClick="powThreeButton"
+                android:onClick="sqrtButton"
                 android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text="sqrt"/>
             <Button
                 style="@style/AdditionalButton"
                 android:textSize="17dp"
-                android:onClick="factorialButton"
+                android:onClick="lgButton"
                 android:text="log"
                 tools:ignore="TextContrastCheck" />
 
@@ -43,24 +43,24 @@
             android:layout_height="0dp"
             android:layout_weight="1">
             <Button
-                android:onClick="oneToXButton"
+                android:onClick="sinButton"
                 android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text="sin"/>
             <Button
-                android:onClick="powButton"
+                android:onClick="cosButton"
                 android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text="cos"/>
             <Button
-                android:onClick="powThreeButton"
+                android:onClick="tgButton"
                 android:textSize="17dp"
                 style="@style/AdditionalButton"
                 android:text="tg"/>
             <Button
                 style="@style/AdditionalButton"
                 android:textSize="17dp"
-                android:onClick="factorialButton"
+                android:onClick="piButton"
                 android:text="PI"
                 tools:ignore="TextContrastCheck" />
 
@@ -157,14 +157,17 @@
             android:layout_weight="1">
             <Button
                 android:onClick="SevenNumber"
+                android:textSize="19dp"
                 style="@style/NumberButton"
                 android:text="7"/>
             <Button
                 android:onClick="EightNumber"
+                android:textSize="19dp"
                 style="@style/NumberButton"
                 android:text="8"/>
             <Button
                 style="@style/NumberButton"
+                android:textSize="19dp"
                 android:onClick="NineNumber"
                 android:text="9"/>
             <Button
@@ -182,17 +185,21 @@
             <Button
                 style="@style/NumberButton"
                 android:onClick="FourNumber"
+                android:textSize="19dp"
                 android:text="4"/>
             <Button
                 style="@style/NumberButton"
                 android:onClick="FiveNumber"
+                android:textSize="19dp"
                 android:text="5"/>
             <Button
                 style="@style/NumberButton"
                 android:onClick="SixNumber"
+                android:textSize="19dp"
                 android:text="6"/>
             <Button
                 android:onClick="delNumber"
+
                 style="@style/ActionButton"
                 android:text="/"/>
 
@@ -205,16 +212,19 @@
             <Button
                 style="@style/NumberButton"
                 android:onClick="OneNumber"
+                android:textSize="19dp"
                 android:id="@+id/OneNumber"
                 android:text="1"/>
             <Button
                 style="@style/NumberButton"
                 android:onClick="TwoNumber"
+                android:textSize="19dp"
                 android:id="@+id/TwoNumber"
                 android:text="2"/>
             <Button
                 style="@style/NumberButton"
                 android:onClick="ThreeNumber"
+                android:textSize="19dp"
                 android:id="@+id/ThreeNumber"
                 android:text="3"/>
             <Button
@@ -231,11 +241,13 @@
             <Button
                 style="@style/NumberButton"
                 android:onClick="DoubleZero"
+                android:textSize="19dp"
                 android:id="@+id/DoubleZeroNumber"
                 android:text="00"/>
             <Button
                 style="@style/NumberButton"
                 android:onClick="ZeroNumber"
+                android:textSize="19dp"
                 android:id="@+id/ZeroNumber"
                 android:text="0"/>
             <Button

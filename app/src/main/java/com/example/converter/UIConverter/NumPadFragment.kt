@@ -1,18 +1,12 @@
-package com.example.converter.UI
+package com.example.converter.UIConverter
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
-import com.example.converter.R
-import com.example.converter.databinding.ActivityMainBinding
 import com.example.converter.databinding.FragmentNumPadBinding
 
 

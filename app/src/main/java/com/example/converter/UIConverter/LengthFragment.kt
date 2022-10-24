@@ -1,4 +1,4 @@
-package com.example.converter.UI
+package com.example.converter.UIConverter
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,20 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleOwner
-import com.example.converter.R
-import com.example.converter.databinding.FragmentCurrencyBinding
-import com.example.converter.databinding.FragmentSpeedBinding
+import com.example.converter.databinding.FragmentLengthBinding
 
-class SpeedFragment : Fragment() {
+class LengthFragment : Fragment() {
+    lateinit var binding:FragmentLengthBinding
     private val dataModel: DataModel by activityViewModels()
-    lateinit var binding: FragmentSpeedBinding
     lateinit var editTextBefore: EditText
     lateinit var editTextAfter: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        super.onCreate(null)
+        super.onCreate(savedInstanceState)
 
     }
 
@@ -29,9 +26,8 @@ class SpeedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentSpeedBinding.inflate(inflater)
+        binding = FragmentLengthBinding.inflate(inflater)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,11 +76,12 @@ class SpeedFragment : Fragment() {
                 }
             }
         }
+
         super.onViewCreated(view, savedInstanceState)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = SpeedFragment()
+        fun newInstance() = LengthFragment()
     }
 }

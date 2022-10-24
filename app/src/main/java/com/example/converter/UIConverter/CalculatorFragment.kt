@@ -1,17 +1,13 @@
-package com.example.converter.UI
+package com.example.converter.UIConverter
 
 import android.os.Bundle
-import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
-import com.example.converter.R
 import com.example.converter.databinding.FragmentCalculatorBinding
-import com.example.converter.databinding.FragmentCurrencyBinding
-import com.example.converter.databinding.FragmentLengthBinding
 
 class CalculatorFragment : Fragment() {
     lateinit var binding: FragmentCalculatorBinding

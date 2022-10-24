@@ -1,24 +1,21 @@
-package com.example.converter.UI
+package com.example.converter.UIConverter
 
 import android.os.Bundle
+import android.text.InputType
+import android.view.*
+import android.widget.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleOwner
-import com.example.converter.MAIN
-import com.example.converter.databinding.FragmentLengthBinding
+import com.example.converter.databinding.FragmentCurrencyBinding
 
-class LengthFragment : Fragment() {
-    lateinit var binding:FragmentLengthBinding
+
+class CurrencyFragment : Fragment() {
+    lateinit var binding: FragmentCurrencyBinding
     private val dataModel: DataModel by activityViewModels()
     lateinit var editTextBefore: EditText
     lateinit var editTextAfter: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
 
     }
@@ -28,37 +25,45 @@ class LengthFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentLengthBinding.inflate(inflater)
+        binding = FragmentCurrencyBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val prevText: EditText = binding.PrevText
         editTextBefore = binding.PrevText
         editTextBefore.setShowSoftInputOnFocus(false)
         editTextAfter = binding.AfterText
         editTextAfter.setShowSoftInputOnFocus(false)
 
-        dataModel.message.observe(viewLifecycleOwner){
+
+        dataModel.message.observe(viewLifecycleOwner) {
+            binding.PrevText.setInputType(InputType.TYPE_CLASS_NUMBER);
             binding.PrevText.append(it)
         }
-        dataModel.delete.observe(viewLifecycleOwner){
+        dataModel.delete.observe(viewLifecycleOwner) {
+            binding.PrevText.setInputType(InputType.TYPE_CLASS_NUMBER);
             binding.PrevText.setText(it)
         }
-        dataModel.messageTemp.observe(viewLifecycleOwner){
+        dataModel.messageTemp.observe(viewLifecycleOwner) {
+            binding.PrevText.setInputType(InputType.TYPE_CLASS_NUMBER);
             binding.PrevText.append(it)
         }
-        dataModel.paste.observe(viewLifecycleOwner){
+        dataModel.paste.observe(viewLifecycleOwner) {
+            binding.PrevText.setInputType(InputType.TYPE_CLASS_NUMBER);
             binding.AfterText.setText(it)
         }
-        dataModel.spinBeforeSet.observe(viewLifecycleOwner){
+        dataModel.spinBeforeSet.observe(viewLifecycleOwner) {
+            binding.PrevText.setInputType(InputType.TYPE_CLASS_NUMBER);
             binding.SpinnerBefore.setSelection(it.toInt())
         }
-        dataModel.spinAfterSet.observe(viewLifecycleOwner){
+        dataModel.spinAfterSet.observe(viewLifecycleOwner) {
+            binding.PrevText.setInputType(InputType.TYPE_CLASS_NUMBER);
             binding.SpinnerAfter.setSelection(it.toInt())
         }
 
         dataModel.proButton.observe(viewLifecycleOwner) {
-            if(it == "true") {
+            if (it == "true") {
                 binding.apply {
 
                     binding.CopyButtonBefore.visibility = View.VISIBLE
@@ -66,9 +71,7 @@ class LengthFragment : Fragment() {
                     binding.PasteButtonBefore.visibility = View.VISIBLE
                     binding.SwapButton.visibility = View.VISIBLE
                 }
-            }
-            else
-            {
+            } else {
                 binding.apply {
 
                     binding.CopyButtonBefore.visibility = View.INVISIBLE
@@ -77,13 +80,8 @@ class LengthFragment : Fragment() {
                     binding.SwapButton.visibility = View.INVISIBLE
                 }
             }
+
+            super.onViewCreated(view, savedInstanceState)
         }
-
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = LengthFragment()
     }
 }

@@ -46,7 +46,7 @@
 
             <fragment
                 android:id="@+id/num_pad_fragment"
-                android:name="com.example.converter.UI.NumPadFragment"
+                android:name="com.example.converter.UIConverter.NumPadFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

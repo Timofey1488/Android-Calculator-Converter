@@ -5,7 +5,7 @@
 
     android:layout_height="300dp"
     android:orientation="vertical"
-    tools:context=".UI.SpeedFragment">
+    tools:context=".UIConverter.SpeedFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout

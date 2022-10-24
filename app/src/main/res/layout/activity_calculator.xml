@@ -13,10 +13,11 @@
         android:orientation="vertical">
 
         <fragment
+            android:transitionName="editText"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:id="@+id/fragment_calculator"
-            android:name="com.example.converter.UI.CalculatorFragment"
+            android:name="com.example.converter.UIConverter.CalculatorFragment"
             android:layout_height="match_parent"
             tools:layout="@layout/fragment_calculator" />
     </LinearLayout>
@@ -32,12 +33,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
+
             <fragment
-                android:layout_width="match_parent"
-                android:layout_weight="1"
                 android:id="@+id/num_pad_fragment_calculator"
-                android:name="com.example.converter.UI.NumPadCalculator"
+                android:name="com.example.converter.UIConverter.NumPadCalculator"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 tools:layout="@layout/fragment_num_pad_calculator" />
         </LinearLayout>
 

@@ -1,4 +1,4 @@
-package com.example.converter.UI
+package com.example.converter.UIConverter
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
