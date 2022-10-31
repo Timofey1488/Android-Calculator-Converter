@@ -21,13 +21,14 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
+
             <EditText
                 android:cursorVisible="true"
                 android:enabled="false"
                 android:paddingRight="3dp"
                 android:id="@+id/PrevText"
                 style="@style/TextViewFirstStyle"
-                android:layout_width="411dp"
+                android:layout_width="410dp"
                 android:hint="0"
                 android:imeOptions="actionNone"
                 android:importantForAutofill="no"
@@ -50,11 +51,16 @@
             android:layout_weight="1"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
-
+            <Button
+                android:id="@+id/BackButton"
+                android:onClick="BackButton"
+                style="@style/ActionButton"
+                android:textSize="25dp"
+                android:text="@string/fa_undo"/>
             <EditText
                 android:id="@+id/AfterText"
                 style="@style/TextViewAdditionalStyle"
-                android:layout_width="380dp"
+                android:layout_width="300dp"
                 android:enabled="false"
                 android:imeOptions="actionNone"
                 android:paddingRight="3dp" />

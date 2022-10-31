@@ -34,5 +34,11 @@ open class DataModel : ViewModel() {
     val copy: MutableLiveData<String> by lazy{
         MutableLiveData<String>()
     }
+    val copyLastPrev: MutableLiveData<String> by lazy{
+        MutableLiveData<String>()
+    }
+    val copyLastAfter: MutableLiveData<String> by lazy{
+        MutableLiveData<String>()
+    }
 }
 

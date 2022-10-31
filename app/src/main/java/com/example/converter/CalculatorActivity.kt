@@ -24,7 +24,7 @@ class CalculatorActivity : AppCompatActivity() {
     private var operation: Boolean = false
     private var bracketOpenCount: Int = 0
     private var exceptionCheck:Boolean = false
-
+    private var TempBackStr:String = ""
     private val ft: FragmentTransaction? = null
 
 
@@ -257,7 +257,7 @@ class CalculatorActivity : AppCompatActivity() {
 
         }
         else if(result.toString().length > 16)
-            dataModel.delete.value = format(deleteZeroesInString(result.toString()), 2)
+            dataModel.delete.value = deleteZeroesInString(result.toString())
         else
             dataModel.delete.value = formatStr
         prevText.setSelection(pos)
@@ -431,6 +431,10 @@ class CalculatorActivity : AppCompatActivity() {
             return
         }
         val posCursor:Int = prevText.selectionStart
+        if(prevText.text.length == 1 && prevText.text.toString() == "0"){
+            Toast.makeText(this,"Lenght = 0", Toast.LENGTH_SHORT).show()
+            return
+        }
         if(testZeroPrevPoint(prevText.text.toString(),posCursor))
             return
         else{
@@ -504,6 +508,8 @@ class CalculatorActivity : AppCompatActivity() {
             Toast.makeText(this,"Position < 0", Toast.LENGTH_SHORT).show()
         }
     }
+
+
     fun testNumberLessZero():Boolean{
         val prevText:EditText = findViewById(R.id.PrevText)
         var prevTextCursor:String = cursorPointer(prevText.text.toString())
@@ -707,6 +713,7 @@ class CalculatorActivity : AppCompatActivity() {
 
     fun oneToXButton(view: View){
         val prevText:EditText = findViewById(R.id.PrevText)
+        var tempStrPrev:String = prevText.text.toString()
         try {
             val a:BigDecimal = prevText.text.toString().toBigDecimal()
             val b = 1
@@ -715,6 +722,9 @@ class CalculatorActivity : AppCompatActivity() {
             catch (e:Throwable){
                 dataModel.delete.value = "Infinity"
                 Toast.makeText(this, "Ошибка: " + e.toString(), Toast.LENGTH_SHORT).show();
+        }
+        finally{
+            TempBackStr = tempStrPrev
         }
 
     }
@@ -733,6 +743,8 @@ class CalculatorActivity : AppCompatActivity() {
     }
 
     fun powT(str:String, scale: Int){
+        val prevText:EditText = findViewById(R.id.PrevText)
+        var tempStrPrev:String = prevText.text.toString()
         try {
             val a:BigDecimal = str.toBigDecimal()
             if(str.length >16)
@@ -743,6 +755,9 @@ class CalculatorActivity : AppCompatActivity() {
         catch (e:Throwable ){
             dataModel.delete.value = "Infinity"
             Toast.makeText(this, "Ошибка: " + e.toString(), Toast.LENGTH_SHORT).show();
+        }
+        finally{
+            TempBackStr = tempStrPrev
         }
     }
 
@@ -759,17 +774,21 @@ class CalculatorActivity : AppCompatActivity() {
 
  //Factorial Function(Start)
     fun factorialButton(view: View){
-        val prevText:EditText = findViewById(R.id.PrevText)
+         val prevText:EditText = findViewById(R.id.PrevText)
+         var tempStrPrev:String = prevText.text.toString()
         try {
-            var temp:String = factorial(prevText.text.toString().toInt()).toString()
+            var temp:String = factorial(prevText.text.toString().toInt())
             if(temp.length >16)
-                dataModel.delete.value = format(factorial(prevText.text.toString().toInt()),2).toString()
+                dataModel.delete.value = format(factorial(prevText.text.toString().toInt()),2)
             else
                 dataModel.delete.value = factorial(prevText.text.toString().toInt())
         }
         catch(e:Throwable){
             dataModel.delete.value = "Infinity"
             Toast.makeText(this, "Ошибка: " + e.toString(), Toast.LENGTH_SHORT).show();
+        }
+        finally{
+            TempBackStr = tempStrPrev
         }
     }
 
@@ -808,9 +827,12 @@ class CalculatorActivity : AppCompatActivity() {
     }
 
  //Factorial Function(End)
-
+    fun BackButton(view:View){
+        dataModel.copyLastPrev.value = TempBackStr
+    }
     fun sqrtButton(view: View){
         val prevText:EditText = findViewById(R.id.PrevText)
+        var tempStrPrev:String = prevText.text.toString()
         try {
             if(prevText.text.toString() == "0" || prevText.text.isEmpty()){
                 dataModel.delete.value = "0"
@@ -824,6 +846,9 @@ class CalculatorActivity : AppCompatActivity() {
         catch (e:Throwable){
             dataModel.delete.value = "Infinity"
             Toast.makeText(this, "Ошибка: " + e.toString(), Toast.LENGTH_SHORT).show();
+        }
+        finally{
+            TempBackStr = tempStrPrev
         }
     }
 

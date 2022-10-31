@@ -56,6 +56,9 @@ class CalculatorFragment : Fragment() {
         dataModel.change.observe(viewLifecycleOwner) {
             binding.AfterText.append(it)
         }
+        dataModel.copyLastPrev.observe(viewLifecycleOwner){
+                binding.PrevText.setText(it)
+        }
     }
 
     companion object {

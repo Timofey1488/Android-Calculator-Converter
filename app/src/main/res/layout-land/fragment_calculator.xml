@@ -44,11 +44,18 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
+            <Button
+                android:id="@+id/BackButton"
+                android:onClick="BackButton"
+                style="@style/ActionButton"
+                android:layout_weight="0.1"
+                android:textSize="25dp"
+                android:text="@string/fa_undo"/>
             <EditText
                 android:enabled="false"
                 android:id="@+id/AfterText"
                 style="@style/TextViewAdditionalStyle"
+                android:layout_weight="1"
                 android:hint="0"
                 android:imeOptions="actionNone"/>
 

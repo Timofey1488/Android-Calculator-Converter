@@ -10,6 +10,7 @@
     <string name="fa_calculator">\uf1ec</string>
     <string name="fa_arrow_circle_left">\uf0a8</string>
     <string name="fa_arrow_circle_right">\uf0a9 </string>
+    <string name="fa_undo">\uf0e2 </string>
     <string name="fa_download">\uf01c</string>
     <string name="currency">Currency</string>
     <string name="calculator">Calculator</string>
