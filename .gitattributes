@@ -1,3 +1,4 @@
 *.xml linguist-documentation
 *.scss linguist-documentation
+*.less linguist-documentation
 *.kt linguist-language=kotlin
