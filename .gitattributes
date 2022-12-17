@@ -1,0 +1,3 @@
+*.xml linguist-documentation
+
+*.kt linguist-language=kotlin
